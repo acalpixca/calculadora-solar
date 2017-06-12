@@ -1,0 +1,27 @@
+{
+  "name": "calculadora_solar",
+  "version": "1.0.0",
+  "description": "Calculo de la hora solar",
+  "main": "calculadora.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "solar-calc": "^1.1.0",
+    "node-calendar": "^0.1.4",
+    "chai": "^4.0.2"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "calculadora",
+    "solar",
+    "time"
+  ],
+  "author": "Eva Sanchez Guerrero <acalpixca@gmail.com> (http://www.techmex.es)",
+  "license": "ISC"
+}

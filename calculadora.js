@@ -32,6 +32,19 @@ function timeToHours(tiempo){
 	return(hora + minuto/60);
 }
 
+function hoursToTime(decim){
+	var horas=Math.trunc(decim);
+	var resto=decim-horas;
+	var minutosDec=resto*60;
+	var minutos=Math.trunc(60*resto);
+	resto=minutosDec-minutos;
+	var segundos=Math.trunc(resto*60);
+	return ({
+		horas: horas,
+		minutos: minutos,
+		segundos: segundos
+	});
+}
 function lastSundayOfEachMonths(year) {
 	var resultado=[];
 	var lastDay = [31,28,31,30,31,30,31,31,30,31,30,31]
@@ -81,6 +94,7 @@ console.log('\n\n' + solar.solarNoon);
 */
 
 function decimalAGradosMinutosSegundos(longi) {
+	longi=Math.abs(longi); // elimino el signo
 	var grados=Math.trunc(longi);
 	var resto=longi-grados; // 0.something
 	var minutosDec=resto*60;
@@ -96,16 +110,21 @@ function calculoHoraLocal(date, time, longitude) {
 	// hora local es hora civil en decimal - correccion + longitud
 	var horaCivil=timeToHours(time);
 	var correccion=correccionHorarioVerano(date);
+	var longitudGradoMinSeg=decimalAGradosMinutosSegundos(longitude);
 	
-	return(horaCivil-correccion+longitude);
+	var correcLongi=4*(longitudGradoMinSeg.grados + longitudGradoMinSeg.minutos/60)/60;
+	
+	var horaDec=horaCivil-correccion+correcLongi;
+	var horaNormal=hoursToTime(horaDec);
+	var resultado=horaNormal.horas + ':'+horaNormal.minutos + ':' + horaNormal.segundos;
+	return(resultado);
+	
+
 }
 
-//console.log(Calendar.weekday(2017,06,12));
 
-//console.log(lastSundayOfEachMonths(2017));
-
-//correccionHorarioVerano('2017-05-12');
-
+// console.log(calculoHoraLocal('1972-04-03', '10:45:00', 2.1687863));
+module.exports.calculoHoraLocal=calculoHoraLocal;
 module.exports.daysSinceNewYears=daysSinceNewYears;
 module.exports.timeToHours=timeToHours;
 module.exports.correccionHorarioVerano=correccionHorarioVerano;

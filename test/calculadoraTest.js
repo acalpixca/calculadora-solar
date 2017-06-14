@@ -53,6 +53,9 @@ describe('Calculadora', function() {
 	assert.deepEqual({grados: 51, minutos: 31 , segundos: 31} ,Calculadora.decimalAGradosMinutosSegundos(51.5254742));
   });
   
+    it('Calculo hora solar de mi nacimiento', function() {
+	assert.deepEqual("8:53:39" ,Calculadora.calculoHoraLocal('1972-04-03', '10:45:00', 2.1687863));
+  });
   
   // We can have more its here
 });

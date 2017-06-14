@@ -114,6 +114,9 @@ function calculoHoraLocal(date, time, longitude) {
 	
 	var correcLongi=4*(longitudGradoMinSeg.grados + longitudGradoMinSeg.minutos/60)/60;
 	
+	if (longitude<0) {
+		correcLongi=correcLongi*(-1);
+	}
 	var horaDec=horaCivil-correccion+correcLongi;
 	var horaNormal=hoursToTime(horaDec);
 	var resultado=horaNormal.horas + ':'+horaNormal.minutos + ':' + horaNormal.segundos;

@@ -49,6 +49,10 @@ describe('Calculadora', function() {
 	assert.deepEqual(1,Calculadora.correccionHorarioVerano('2017-10-31'));
   });
   
+  it('De decimal a grados minutos segundos', function() {
+	assert.deepEqual({grados: 51, minutos: 31 , segundos: 31} ,Calculadora.decimalAGradosMinutosSegundos(51.5254742));
+  });
+  
   
   // We can have more its here
 });

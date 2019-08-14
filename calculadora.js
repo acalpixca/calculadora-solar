@@ -7,7 +7,7 @@ function daysSinceNewYears(date) {
 	var month=parseInt(yearMonthDay[1]);
 	var day=parseInt(yearMonthDay[2]);
 	var year=parseInt(yearMonthDay[0]);
-	
+
 	var diasTotales=day;
 	//console.log(day);
 	var diasEnMes=[31,0,31,30,31,30,31,31,30,31,30,31];
@@ -19,7 +19,7 @@ function daysSinceNewYears(date) {
 			if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) { diasTotales=diasTotales+29; } else {diasTotales=diasTotales+28;}
 		}
 	}
-	
+
 	return(diasTotales);
 }
 
@@ -28,7 +28,7 @@ function timeToHours(tiempo){
 	var horaMinutoSegundo=tiempo.split(':');
 	var hora=parseInt(horaMinutoSegundo[0]);
 	var minuto=parseInt(horaMinutoSegundo[1]);
-	
+
 	return(hora + minuto/60);
 }
 
@@ -53,7 +53,7 @@ function lastSundayOfEachMonths(year) {
 		date.setFullYear(year, month, lastDay[month]);
 		date.setDate(date.getDate()-date.getDay());
 		resultado.push(date.toISOString().substring(0,10));
-	}  
+	}
 	return(resultado);
 }
 
@@ -62,10 +62,10 @@ function correccionHorarioVerano(date){
 	var month=parseInt(yearMonthDay[1]);
 	var day=parseInt(yearMonthDay[2]);
 	var year=parseInt(yearMonthDay[0]);
-	
+
 	var domingoDeMiMes=lastSundayOfEachMonths(year)[month-1];
 	var diaDomingoDeMiMes=parseInt(domingoDeMiMes.split('-')[2]);
-	
+
 	//console.log('El domingo de mi mes ' + domingoDeMiMes + ' y su dia es ' + diaDomingoDeMiMes);
 	if((month>3) && (month<10)){
 		return(2);
@@ -103,7 +103,7 @@ function decimalAGradosMinutosSegundos(longi) {
 	var segundos=Math.trunc(resto*60);
 	return ({
 		grados: grados,
-		minutos: minutos, 
+		minutos: minutos,
 		segundos: segundos});
 }
 function calculoHoraLocal(date, time, longitude) {
@@ -111,9 +111,9 @@ function calculoHoraLocal(date, time, longitude) {
 	var horaCivil=timeToHours(time);
 	var correccion=correccionHorarioVerano(date);
 	var longitudGradoMinSeg=decimalAGradosMinutosSegundos(longitude);
-	
+
 	var correcLongi=4*(longitudGradoMinSeg.grados + longitudGradoMinSeg.minutos/60)/60;
-	
+
 	if (longitude<0) {
 		correcLongi=correcLongi*(-1);
 	}
@@ -121,10 +121,20 @@ function calculoHoraLocal(date, time, longitude) {
 	var horaNormal=hoursToTime(horaDec);
 	var resultado=horaNormal.horas + ':'+horaNormal.minutos + ':' + horaNormal.segundos;
 	return(resultado);
-	
+
 
 }
 
+function calculoHoraLocalAhora(longitude) {
+	let ahora = new Date();
+	let horas = ahora.getHours();
+	let minutos = ahora.getMinutes();
+	let segundos = ahora.getSeconds();
+	var longitudGradoMinSeg=decimalAGradosMinutosSegundos(longitude);
+	// por cada 15 grados, una hora atrás o adelante
+
+
+}
 
 // console.log(calculoHoraLocal('1972-04-03', '10:45:00', 2.1687863));
 module.exports.calculoHoraLocal=calculoHoraLocal;

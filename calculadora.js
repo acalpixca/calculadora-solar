@@ -45,6 +45,25 @@ function hoursToTime(decim){
 		segundos: segundos
 	});
 }
+
+function timeToString(hora) {
+	// hh:mm:ss
+	resultado="";
+	if (hora.horas < 10) {
+		resultado += "0";
+	}
+	resultado += hora.horas;
+	if (hora.minutos < 10) {
+		resultado += "0";
+	}
+	resultado += ":" + hora.minutos;
+	if (hora.segundos < 10) {
+		resultado += "0";
+	}
+	resultado += ":" + hora.segundos;
+	return(resultado);
+}
+
 function lastSundayOfEachMonths(year) {
 	var resultado=[];
 	var lastDay = [31,28,31,30,31,30,31,31,30,31,30,31]
@@ -119,7 +138,8 @@ function calculoHoraLocal(date, time, longitude) {
 	}
 	var horaDec=horaCivil-correccion+correcLongi;
 	var horaNormal=hoursToTime(horaDec);
-	var resultado=horaNormal.horas + ':'+horaNormal.minutos + ':' + horaNormal.segundos;
+	let resultado = timeToString(horaNormal);
+	// var resultado=horaNormal.horas + ':'+horaNormal.minutos + ':' + horaNormal.segundos;
 	return(resultado);
 
 
@@ -130,14 +150,18 @@ function calculoHoraLocalAhora(longitude) {
 	let horas = ahora.getHours();
 	let minutos = ahora.getMinutes();
 	let segundos = ahora.getSeconds();
-	var longitudGradoMinSeg=decimalAGradosMinutosSegundos(longitude);
+	//var longitudGradoMinSeg=decimalAGradosMinutosSegundos(longitude);
 	// por cada 15 grados, una hora atrás o adelante
-
-
+	let ajuste = longitude / 15;
+	let tiempo = timeToHours(horas + ":" + minutos + ":" + segundos );
+	let horaSolar = tiempo + ajuste;
+	let resultado = timeToString(hoursToTime(horaSolar));
+	return (resultado);
 }
 
 // console.log(calculoHoraLocal('1972-04-03', '10:45:00', 2.1687863));
 module.exports.calculoHoraLocal=calculoHoraLocal;
+module.exports.calculoHoraLocalAhora=calculoHoraLocalAhora;
 module.exports.daysSinceNewYears=daysSinceNewYears;
 module.exports.timeToHours=timeToHours;
 module.exports.correccionHorarioVerano=correccionHorarioVerano;
